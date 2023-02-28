@@ -21,21 +21,40 @@ gallery.innerHTML = createEL;
 
 gallery.addEventListener('click', onLinkClick);
 
+// function onLinkClick(event) {
+//   event.preventDefault();
+//   const instance = basicLightbox.create(`
+//     <img width="1400" height="900" src="${event.target.dataset.source}">
+//   `)
+//   instance.show();
+//   document.element().addEventListener('keydown', onEscPress);
+
+//   function onEscPress(event) {
+//     if (event.code == "Escape") {
+//       instance.close();
+//     }
+//   }
+// }
+
 function onLinkClick(event) {
   event.preventDefault();
-  const instance = basicLightbox.create(`
-    <img width="1400" height="900" src="${event.target.dataset.source}">
-  `)
-  instance.show();
-  instance.element().addEventListener('keydown', onEscPress);
-
-  function onEscPress(event) {
-    if (event.code === "Escape") {
+  if (event.target.classList.contains("gallery")) {
+    return;
+  }
+  const closeModal = (event) => {
+    if (event.code === 'Escape') {
       instance.close();
     }
   }
+  let instance = basicLightbox.create(`
+  <img width="100%" height="100%" src=${event.target.dataset.source}>`, {
+    onShow: (instance) => {
+        window.addEventListener('keydown', closeModal);
+    },
+    onClose: (instance) => {window.removeEventListener('keydown', closeModal)}
+})
+instance.show()
 }
-
 
 
 console.log(galleryItems);
