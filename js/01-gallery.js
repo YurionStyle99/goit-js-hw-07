@@ -31,7 +31,7 @@ gallery.addEventListener('click', onLinkClick);
 function onLinkClick(event) {
     event.preventDefault();
 	const instance = basicLightbox.create(`
-		<img width="1400" height="900" src="${event.currentTarget.dataset.data-source}">
+		<img width="1400" height="900" src="${event.currentTarget.dataset.source}">
 	`)
 	instance.show()
 }
